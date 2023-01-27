@@ -1,0 +1,23 @@
+# mongo.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis # let deployment know which pod for this deployment
+  template: # configuration for pods
+    metadata:
+      labels:
+        app: redis # each pod has a unique name, but pods can share the same label
+    spec:
+      containers: # containers in a pod, usually add one container per pod
+      - name: redisdb
+        image: redis:alpine # pull image from Docker Hub
+        #imagePullPolicy: Never
+        ports:
+        - containerPort: 6379

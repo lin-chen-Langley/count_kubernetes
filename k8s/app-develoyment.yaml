@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp # let deployment know which pod for this deployment
+  template: # configuration for pods
+    metadata:
+      labels:
+        app: webapp # each pod has a unique name, but pods can share the same label
+    spec:
+      containers: # containers in a pod, usually add one container per pod
+      - name: webapp
+        image: lchenlangley/count # pull image from Docker Hub
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MYREDIS_HOST
+          value: redis-service

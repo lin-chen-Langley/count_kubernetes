@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  webapp:
+    image: lchenlangley/count
+    build: .
+    ports:
+      - 8000:5000
+    volumes:
+      - .:/code # enable hot reloading
+    environment:
+      - MYREDIS_HOST=redisserver
+      - FLASK_ENV=development
+    depends_on:
+      - redisserver
+  redisserver:
+    image: "redis:alpine"
